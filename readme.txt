@@ -15,8 +15,7 @@ This shortcode will allow you to include the content from any posts or pages.
 
 The returned content is eventually passed through a 'the_content' filter.
 
-Usage:
-
+Shortcode usage:
 [mv_include id=30]
 
 
