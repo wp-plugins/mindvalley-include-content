@@ -16,7 +16,7 @@ This shortcode will allow you to include the content from any posts or pages.
 The returned content is eventually passed through a 'the_content' filter.
 
 Shortcode usage:
-[mv_include id=30]
+[mv_include id=<post_id>]
 
 
 
@@ -24,7 +24,7 @@ Shortcode usage:
 
 1. Upload plugin folder to the `/wp-content/plugins/` directory
 2. Activate the plugin through the 'Plugins' menu in WordPress
-3. Use the shortcode in your editor (e.g. [mv_include id=30])
+3. Use the shortcode in your editor (e.g. [mv_include id=<post_id>])
 
 
 == Frequently Asked Questions ==
