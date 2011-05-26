@@ -18,9 +18,7 @@ The returned content is eventually passed through a 'the_content' filter.
 Shortcode usage:
 
 [mv_include id='<page or post ID>']
-
 or
-
 [mv_include slug='<page or post SLUG>']
 
 
