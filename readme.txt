@@ -1,10 +1,10 @@
-=== MindValley Include Post Content ===
+=== Mindvalley Include Post Content ===
 Contributors: mindvalley
 Donate link: http://www.mindvalley.com/opensource
 Tags: include, post, pages, content
 Requires at least: 3.0.0
 Tested up to: 3.1.3
-Stable tag: 1.1
+Stable tag: 1.1.1
 
 Creates shortcode [mv_include] to include content from another post/page.
 
