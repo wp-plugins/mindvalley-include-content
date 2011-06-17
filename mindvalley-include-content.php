@@ -4,7 +4,7 @@ Plugin Name: MindValley Include Content
 Plugin URI: http://mindvalley.com
 Description: Creates shortcode [mv_include] to include content from another post/page.
 Author: MindValley
-Version: 1.2.1
+Version: 1.2.2
 */
 
 /**
@@ -36,18 +36,24 @@ class mvIncludeContent {
 		<script>
 			jQuery('#wp-admin-bar-mv_include_toggle a').click(function(){
 				jQuery('div.mv_include').toggleClass('show');
+				jQuery('div.mv_include').each(function(){
+					var thediv = jQuery(this);
+					if(thediv.hasClass('show')){
+						jQuery(this).children('div').each(function(){
+							if(jQuery(this).css('float') != 'none'){
+								thediv.css('float',jQuery(this).css('float'));
+							}
+						});
+					}
+				});
 				return false;
 			});
 		</script>
 		<style type="text/css">
-			div.mv_include .edit,
-			div.mv_include .info {
-				display:none;
-			}
-
+		
 			div.mv_include.show .edit,
 			div.mv_include.show .info {
-				display:inline;
+				display:inline !important;
 				position:absolute;
 				background:#ff0000;
 				padding: 0 15px;
@@ -99,7 +105,11 @@ class mvIncludeContent {
 	
 	function showincluded_metabox(){
 		global $post;
-		preg_match_all('/(.?)\[(mv_include)\b(.*?)(?:(\/))?\](?:(.+?)\[\/\2\])?(.?)/s', $post->post_content, $m);
+		if ( !user_can_richedit() ) {
+			$post_content = htmlspecialchars_decode( $post_content, ENT_QUOTES );
+		}
+
+		preg_match_all('/(.?)\[(mv_include)\b(.*?)(?:(\/))?\](?:(.+?)\[\/\2\])?(.?)/s', $post_content, $m);
 		
 		$included_post = array();
 
@@ -215,7 +225,7 @@ class mvIncludeContent {
 			foreach($atts as $key => $value){
 				$atts_string .= ' ' . $key . '="' . $value . '"';
 			}
-			$content = '<div class="mv_include"><div class="info">[mv_include '.$atts_string.']</div><div class="edit"><a href="'.$edit_link.'" target="_blank">Edit</a></div>' . $content . '</div>';
+			$content = '<div class="mv_include"><div class="info" style="display:none">[mv_include '.$atts_string.']</div><div class="edit" style="display:none"><a href="'.$edit_link.'" target="_blank">Edit</a></div>' . $content . '</div>';
 		}
 		
 

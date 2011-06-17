@@ -4,7 +4,7 @@ Donate link: http://www.mindvalley.com/opensource
 Tags: include, post, pages, content
 Requires at least: 3.0.0
 Tested up to: 3.1.3
-Stable tag: 1.2.1
+Stable tag: 1.2.2
  
 Creates shortcode [mv_include] to include content from another post/page.
 
@@ -50,6 +50,9 @@ It will be executed as well. The returned content is passed through the 'the_con
 
 
 == Changelog ==
+
+= 1.2.2 =
+* Fix Include Content Metabox bug when visual editor is disabled
 
 = 1.2.1 =
 * CSS bugs
