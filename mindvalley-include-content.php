@@ -4,12 +4,12 @@ Plugin Name: MindValley Include Content
 Plugin URI: http://mindvalley.com
 Description: Creates shortcode [mv_include] to include content from another post/page.
 Author: MindValley
-Version: 1.2.2
+Version: 1.2.3
 */
 
 /**
  *  Usage:
- *  [mv_include id='4']
+ *  [mv_include id='4'] (best for performance)
  *  [mv_include slug='the-post-slug']
  *  [mv_include path='http://www.example.com/parent-page/sub-page/']
  *  [mv_include path='parent-page/sub-page']
@@ -105,6 +105,7 @@ class mvIncludeContent {
 	
 	function showincluded_metabox(){
 		global $post;
+		$post_content = $post->post_content;
 		if ( !user_can_richedit() ) {
 			$post_content = htmlspecialchars_decode( $post_content, ENT_QUOTES );
 		}
