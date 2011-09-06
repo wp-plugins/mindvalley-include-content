@@ -4,12 +4,12 @@ Plugin Name: MindValley Include Content
 Plugin URI: http://mindvalley.com
 Description: Creates shortcode [mv_include] to include content from another post/page.
 Author: MindValley
-Version: 1.2.2
+Version: 1.3
 */
 
 /**
  *  Usage:
- *  [mv_include id='4']
+ *  [mv_include id='4'] (best for performance)
  *  [mv_include slug='the-post-slug']
  *  [mv_include path='http://www.example.com/parent-page/sub-page/']
  *  [mv_include path='parent-page/sub-page']
@@ -18,12 +18,76 @@ Version: 1.2.2
 class mvIncludeContent {
 	function __construct(){
 		add_action('init', array(&$this, 'add_shortcode'));
+		add_action( 'init', array(&$this, 'create_post_type'));
 		add_action('admin_init', array(&$this, 'add_custom_metabox'));
+		add_action('admin_head', array(&$this, 'column_css'));
 		
 		add_action( 'admin_bar_menu', array(&$this, 'wp_admin_bar'), 100 );
 		add_action( 'wp_after_admin_bar_render', array(&$this, 'wp_after_admin_bar_render'));
 		if( is_admin() )
 			$this->enqueue_scripts_styles();
+			
+		add_filter( 'manage_edit-include_columns', array(&$this, 'column_title'), 100 );
+		add_filter( 'manage_include_posts_custom_column', array(&$this, 'column_data'), 100 , 2);
+	}
+	
+	function column_css(){
+		echo '<style>
+			.widefat .column-id {
+				width: 4em;
+			}
+		</style>';
+	}
+	
+	function column_title($sortables){
+		$sortables = array_merge(array_slice($sortables,0,1), array( 'id' => 'ID'), array_slice($sortables,1));
+		return $sortables;
+	}
+	
+	function column_data($column_name, $id){
+		global $wpdb;
+		switch ($column_name) {
+			case 'id':
+				echo $id;
+		        break;
+
+			default:
+				break;
+		} // end switch
+	}
+	
+	function create_post_type() {
+		$labels = array(
+		    'name' => _x('Includes', 'post type general name'),
+		    'singular_name' => _x('Include', 'post type singular name'),
+		    'add_new' => _x('Add New', 'include'),
+		    'add_new_item' => __('Add New Include'),
+		    'edit_item' => __('Edit Include'),
+		    'new_item' => __('New Include'),
+		    'all_items' => __('All Includes'),
+		    'view_item' => __('View Include'),
+		    'search_items' => __('Search Includes'),
+		    'not_found' =>  __('No includes found'),
+		    'not_found_in_trash' => __('No includes found in Trash'), 
+		    'parent_item_colon' => '',
+		    'menu_name' => 'Includes'
+
+		  );
+		  $args = array(
+		    'labels' => $labels,
+		    'public' => false,
+		    'publicly_queryable' => false,
+		    'show_ui' => true, 
+		    'show_in_menu' => true,
+		    'query_var' => true,
+		    'rewrite' => true,
+		    'capability_type' => 'page',
+		    'has_archive' => true,
+		    'hierarchical' => false,
+		    'menu_position' => null,
+		    'supports' => array('title','editor','custom-fields')
+		  ); 
+		  register_post_type('include',$args);
 	}
 	
 	function wp_admin_bar(){
@@ -105,6 +169,7 @@ class mvIncludeContent {
 	
 	function showincluded_metabox(){
 		global $post;
+		$post_content = $post->post_content;
 		if ( !user_can_richedit() ) {
 			$post_content = htmlspecialchars_decode( $post_content, ENT_QUOTES );
 		}
