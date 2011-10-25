@@ -4,7 +4,7 @@ Plugin Name: MindValley Include Content
 Plugin URI: http://mindvalley.com
 Description: Creates shortcode [mv_include] to include content from another post/page.
 Author: MindValley
-Version: 1.3.1
+Version: 1.3.2
 */
 
 /**
@@ -247,7 +247,7 @@ class mvIncludeContent {
 					?>
 			    </div>
 			    </li>
-				<?
+				<?php
 			}
 		}
 		echo '</ol>';
