@@ -2,9 +2,9 @@
 Contributors: mindvalley
 Donate link: http://www.mindvalley.com/opensource
 Tags: include, post, pages, content
-Requires at least: 3.0.0
-Tested up to: 3.1.3
-Stable tag: 1.2.2
+Requires at least: 3.1.0
+Tested up to: 3.2.1
+Stable tag: 1.3.2
  
 Creates shortcode [mv_include] to include content from another post/page.
 
@@ -13,14 +13,14 @@ Creates shortcode [mv_include] to include content from another post/page.
 
 This shortcode will allow you to include the content from any posts or pages.
 
-
 Shortcode usage:
 
-* [mv_include id='4']
+* [mv_include id='4'] (best for performance)
 * [mv_include slug='the-post-slug']
 * [mv_include path='http://www.example.com/parent-page/sub-page/']
 * [mv_include path='parent-page/sub-page']
 
+The plugin also create a special post type that can be used for content that are for inclusion only.
 
 
 == Installation ==
@@ -51,6 +51,15 @@ It will be executed as well. The returned content is passed through the 'the_con
 
 == Changelog ==
 
+= 1.3.2 =
+* Remove short tag for servers that doesn't support short tags. (Thanks to kvandekrol - http://wordpress.org/support/profile/kvandekrol)
+
+= 1.3 =
+* Added custom hidden post type for content that are just for inclusion to prevent duplication in display (e.g. RSS).
+
+= 1.2.2 =
+* Fix bug on metabox
+
 = 1.2.2 =
 * Fix Include Content Metabox bug when visual editor is disabled
 
@@ -71,6 +80,9 @@ It will be executed as well. The returned content is passed through the 'the_con
 
 
 == Upgrade Notice ==
+
+= 1.3 =
+* Added custom hidden post type for content that are just for inclusion to prevent duplication in display (e.g. RSS).
 
 = 1.2.1 =
 * CSS bugs
